@@ -290,12 +290,17 @@
     <p>Authorization Code: <span id='code'></span></p>
   </div>
   <div class="generate-token">
-    <h1>Part 2: Login User</h1>
-    <p>You will be redirected to your application to login</p>
-    <button onclick = 'redirectToLogin()' class='btn btn-primary' >Login</button>
-    <p>Authorization Code: <span id='code'></span></p>
+    <h1>Part 3: Generate Authentication Token</h1>
+    <p>The Authorization Code will be used to generate an authentication token for the user</p>
+    <button onclick = 'generateToken()' class='btn btn-primary' >Token</button>
     <p>Token: <span id='token'></span></p>
-    <p>Refresh Token: <span id='refresh_token'></span></p>
+  </div>
+  <div class="user-info">
+    <h1>Part 4: Get User Information</h1>
+    <p>The Authentication Token will be used to get the user information</p>
+    <button onclick = 'getUserInfo()' class='btn btn-primary' >UserInfo</button>
+    <p>Subscriber Id: <span id='subscriber_id'></span></p>
+    <p>Country Code: <span id='country_code'></span></p>
   </div>
   <script src="index.js"> </script>
 </body>
