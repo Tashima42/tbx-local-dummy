@@ -130,7 +130,7 @@ function generateToken() {
 function getUserInfo() {
 
   fetch(globalClient.endpoints.userInfo, {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Authorization': `Bearer ${localStorage.getItem("token")}`
     },
