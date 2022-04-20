@@ -1,336 +1,527 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Local Dummy</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <style>
-    .info {
-      background-color:  #d5d8de;
-      border-radius: 5px;
-      margin-top: 5px;
-      padding-left: 2px;
-    }
-    h1 {
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body class='container'>
-  <div class="configure-client">
-    <h1>Part 1: Configure client</h1>
-    <p>Here you need to insert your client information</p>
-      <div class="card text-white bg-danger mb-1" >
+  <head>
+    <meta charset="utf-8" />
+    <title>Local Dummy</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.7.4/jsoneditor.css"
+      integrity="sha512-XmjnlPNi5tkrcqMGEG7ZOpGhny9t8fdCk0oxZxjFaqF3cl3UKv+51GgeUoY3Rf/ZaGtBvMZ9dDhceGZ1hcOyMw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <style>
+      .info {
+        background-color: #d5d8de;
+        border-radius: 5px;
+        margin-top: 5px;
+        padding-left: 2px;
+      }
+      h1 {
+        margin-top: 10px;
+      }
+      .request-response {
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body class="container">
+    <div class="configure-client">
+      <h1>Part 1: Configure client</h1>
+      <p>Here you need to insert your client information</p>
+      <div class="card text-white bg-danger mb-1">
         <div class="card-header">Attention</div>
         <div class="card-body">
-          <p class="card-text">Add <a href="https://tashima42.github.io/tbx-local-dummy" style="color: black;">https://tashima42.github.io/tbx-local-dummy</a> to the redirect_uris in your service</p>
+          <p class="card-text">
+            Add
+            <a
+              href="https://tashima42.github.io/tbx-local-dummy"
+              style="color: black"
+              >https://tashima42.github.io/tbx-local-dummy</a
+            >
+            to the redirect_uris in your service
+          </p>
         </div>
       </div>
 
-    <div class="form-group">
-      <label for="clientAuthorizeInput">Authorize endpoint</label>
-      <input type="url" class="form-control" id="clientAuthorizeInput" aria-describedby="clientAuthorize" placeholder="http://localhost:3000/authorize">
+      <div class="form-group">
+        <label for="clientAuthorizeInput">Authorize endpoint</label>
+        <input
+          type="url"
+          class="form-control"
+          id="clientAuthorizeInput"
+          aria-describedby="clientAuthorize"
+          placeholder="http://localhost:3000/authorize"
+        />
+      </div>
+      <div class="form-group">
+        <label for="clientTokenInput">Token endpoint</label>
+        <input
+          type="text"
+          class="form-control"
+          id="clientTokenInput"
+          aria-describedby="clientToken"
+          placeholder="http://localhost:3000/token"
+        />
+      </div>
+      <div class="form-group">
+        <label for="clientUserInfoInput">UserInfo endpoint</label>
+        <input
+          type="text"
+          class="form-control"
+          id="clientUserInfoInput"
+          aria-describedby="clientUserInfo"
+          placeholder="http://localhost:3000/userinfo"
+        />
+      </div>
+      <div class="form-group">
+        <label for="clientIdInput">Client Id</label>
+        <input
+          type="text"
+          class="form-control"
+          id="clientIdInput"
+          aria-describedby="clientIdInfo"
+          placeholder="client-id"
+        />
+      </div>
+      <div class="form-group">
+        <label for="clientSecretInput">Client Secret</label>
+        <input
+          type="text"
+          class="form-control"
+          id="clientSecretInput"
+          aria-describedby="clientSecretInfo"
+          placeholder="client-secret"
+        />
+      </div>
+      <div class="form-group">
+        <label for="clientCountrySelect">Client Country Code</label>
+        <select class="form-control" id="clientCountrySelect">
+          <option>AF</option>
+          <option>AX</option>
+          <option>AL</option>
+          <option>DZ</option>
+          <option>AS</option>
+          <option>AD</option>
+          <option>AO</option>
+          <option>AI</option>
+          <option>AQ</option>
+          <option>AG</option>
+          <option>AR</option>
+          <option>AM</option>
+          <option>AW</option>
+          <option>AU</option>
+          <option>AT</option>
+          <option>AZ</option>
+          <option>BS</option>
+          <option>BH</option>
+          <option>BD</option>
+          <option>BB</option>
+          <option>BY</option>
+          <option>BE</option>
+          <option>BZ</option>
+          <option>BJ</option>
+          <option>BM</option>
+          <option>BT</option>
+          <option>BO</option>
+          <option>BA</option>
+          <option>BW</option>
+          <option>BV</option>
+          <option>BR</option>
+          <option>IO</option>
+          <option>BN</option>
+          <option>BG</option>
+          <option>BF</option>
+          <option>BI</option>
+          <option>KH</option>
+          <option>CM</option>
+          <option>CA</option>
+          <option>CV</option>
+          <option>KY</option>
+          <option>CF</option>
+          <option>TD</option>
+          <option>CL</option>
+          <option>CN</option>
+          <option>CX</option>
+          <option>CC</option>
+          <option>CO</option>
+          <option>KM</option>
+          <option>CG</option>
+          <option>CD</option>
+          <option>CK</option>
+          <option>CR</option>
+          <option>CI</option>
+          <option>HR</option>
+          <option>CU</option>
+          <option>CY</option>
+          <option>CZ</option>
+          <option>DK</option>
+          <option>DJ</option>
+          <option>DM</option>
+          <option>DO</option>
+          <option>EC</option>
+          <option>EG</option>
+          <option>SV</option>
+          <option>GQ</option>
+          <option>ER</option>
+          <option>EE</option>
+          <option>ET</option>
+          <option>FK</option>
+          <option>FO</option>
+          <option>FJ</option>
+          <option>FI</option>
+          <option>FR</option>
+          <option>GF</option>
+          <option>PF</option>
+          <option>TF</option>
+          <option>GA</option>
+          <option>GM</option>
+          <option>GE</option>
+          <option>DE</option>
+          <option>GH</option>
+          <option>GI</option>
+          <option>GR</option>
+          <option>GL</option>
+          <option>GD</option>
+          <option>GP</option>
+          <option>GU</option>
+          <option>GT</option>
+          <option>GG</option>
+          <option>GN</option>
+          <option>GW</option>
+          <option>GY</option>
+          <option>HT</option>
+          <option>HM</option>
+          <option>VA</option>
+          <option>HN</option>
+          <option>HK</option>
+          <option>HU</option>
+          <option>IS</option>
+          <option>IN</option>
+          <option>ID</option>
+          <option>IR</option>
+          <option>IQ</option>
+          <option>IE</option>
+          <option>IM</option>
+          <option>IL</option>
+          <option>IT</option>
+          <option>JM</option>
+          <option>JP</option>
+          <option>JE</option>
+          <option>JO</option>
+          <option>KZ</option>
+          <option>KE</option>
+          <option>KI</option>
+          <option>KR</option>
+          <option>KP</option>
+          <option>KW</option>
+          <option>KG</option>
+          <option>LA</option>
+          <option>LV</option>
+          <option>LB</option>
+          <option>LS</option>
+          <option>LR</option>
+          <option>LY</option>
+          <option>LI</option>
+          <option>LT</option>
+          <option>LU</option>
+          <option>MO</option>
+          <option>MK</option>
+          <option>MG</option>
+          <option>MW</option>
+          <option>MY</option>
+          <option>MV</option>
+          <option>ML</option>
+          <option>MT</option>
+          <option>MH</option>
+          <option>MQ</option>
+          <option>MR</option>
+          <option>MU</option>
+          <option>YT</option>
+          <option>MX</option>
+          <option>FM</option>
+          <option>MD</option>
+          <option>MC</option>
+          <option>MN</option>
+          <option>ME</option>
+          <option>MS</option>
+          <option>MA</option>
+          <option>MZ</option>
+          <option>MM</option>
+          <option>NA</option>
+          <option>NR</option>
+          <option>NP</option>
+          <option>NL</option>
+          <option>AN</option>
+          <option>NC</option>
+          <option>NZ</option>
+          <option>NI</option>
+          <option>NE</option>
+          <option>NG</option>
+          <option>NU</option>
+          <option>NF</option>
+          <option>MP</option>
+          <option>NO</option>
+          <option>OM</option>
+          <option>PK</option>
+          <option>PW</option>
+          <option>PS</option>
+          <option>PA</option>
+          <option>PG</option>
+          <option>PY</option>
+          <option>PE</option>
+          <option>PH</option>
+          <option>PN</option>
+          <option>PL</option>
+          <option>PT</option>
+          <option>PR</option>
+          <option>QA</option>
+          <option>RE</option>
+          <option>RO</option>
+          <option>RU</option>
+          <option>RW</option>
+          <option>BL</option>
+          <option>SH</option>
+          <option>KN</option>
+          <option>LC</option>
+          <option>MF</option>
+          <option>PM</option>
+          <option>VC</option>
+          <option>WS</option>
+          <option>SM</option>
+          <option>ST</option>
+          <option>SA</option>
+          <option>SN</option>
+          <option>RS</option>
+          <option>SC</option>
+          <option>SL</option>
+          <option>SG</option>
+          <option>SK</option>
+          <option>SI</option>
+          <option>SB</option>
+          <option>SO</option>
+          <option>ZA</option>
+          <option>GS</option>
+          <option>ES</option>
+          <option>LK</option>
+          <option>SD</option>
+          <option>SR</option>
+          <option>SJ</option>
+          <option>SZ</option>
+          <option>SE</option>
+          <option>CH</option>
+          <option>SY</option>
+          <option>TW</option>
+          <option>TJ</option>
+          <option>TZ</option>
+          <option>TH</option>
+          <option>TL</option>
+          <option>TG</option>
+          <option>TK</option>
+          <option>TO</option>
+          <option>TT</option>
+          <option>TN</option>
+          <option>TR</option>
+          <option>TM</option>
+          <option>TC</option>
+          <option>TV</option>
+          <option>UG</option>
+          <option>UA</option>
+          <option>AE</option>
+          <option>GB</option>
+          <option>US</option>
+          <option>UM</option>
+          <option>UY</option>
+          <option>UZ</option>
+          <option>VU</option>
+          <option>VE</option>
+          <option>VN</option>
+          <option>VG</option>
+          <option>VI</option>
+          <option>WF</option>
+          <option>EH</option>
+          <option>YE</option>
+          <option>ZM</option>
+          <option>ZW</option>
+        </select>
+      </div>
+      <button onclick="saveClient()" class="btn btn-primary">
+        Save Client
+      </button>
     </div>
-    <div class="form-group">
-      <label for="clientTokenInput">Token endpoint</label>
-      <input type="text" class="form-control" id="clientTokenInput" aria-describedby="clientToken" placeholder="http://localhost:3000/token">
+    <div class="login">
+      <h1>Part 2: Login User</h1>
+      <p>You will be redirected to your application login page</p>
+      <button onclick="redirectToLogin()" class="btn btn-primary">Login</button>
+      <div class="form-group">
+        <label for="code">Authorization Code</label>
+        <input
+          readonly
+          type="text"
+          class="form-control"
+          id="code"
+          aria-describedby="authorizationCode"
+          placeholder=""
+        />
+      </div>
     </div>
-    <div class="form-group">
-      <label for="clientUserInfoInput">UserInfo endpoint</label>
-      <input type="text" class="form-control" id="clientUserInfoInput" aria-describedby="clientUserInfo" placeholder="http://localhost:3000/userinfo">
+    <div class="generate-token">
+      <h1>Part 3: Generate Authentication Token</h1>
+      <p>
+        The Authorization Code will be used to generate an authentication token
+        for the user, and must be revoked after one use
+      </p>
+      <button onclick="generateToken()" class="btn btn-primary">Token</button>
+      <div class="form-group">
+        <label for="token">Token</label>
+        <input
+          readonly
+          type="text"
+          class="form-control"
+          id="token"
+          aria-describedby="token"
+          placeholder=""
+        />
+      </div>
+
+      <div class="request-response">
+        <p>
+          <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseRequestToken"
+            aria-expanded="false"
+            aria-controls="collapseRequestToken"
+          >
+            Request
+          </button>
+          <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseResponseToken"
+            aria-expanded="false"
+            aria-controls="collapseResponseToken"
+          >
+            Response
+          </button>
+        </p>
+        <div class="col">
+          <div class="row">
+            <div class="collapse multi-collapse" id="collapseRequestToken">
+              <div class="card card-body" style="width: 100%; height: 300px">
+                <div
+                  id="jsoneditor-request-token"
+                  style="width: 100%; height: 400px"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="collapse multi-collapse" id="collapseResponseToken">
+              <div class="card card-body" style="width: 100%; height: 300px">
+                <div
+                  id="jsoneditor-response-token"
+                  style="width: 100%; height: 400px"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="clientIdInput">Client Id</label>
-      <input type="text" class="form-control" id="clientIdInput" aria-describedby="clientIdInfo" placeholder="client-id">
+    <div class="user-info">
+      <h1>Part 4: Get User Information</h1>
+      <p>The Authentication Token will be used to get the user information</p>
+      <button onclick="getUserInfo()" class="btn btn-primary">UserInfo</button>
+      <div class="form-group">
+        <label for="subscriberIdInput">Subscriber Id</label>
+        <input
+          readonly
+          type="text"
+          class="form-control"
+          id="subscriberIdInput"
+          aria-describedby="subscriberIdInput"
+          placeholder=""
+        />
+      </div>
+      <div class="form-group">
+        <label for="subscriberCountryCodeInput">Country Code</label>
+        <input
+          readonly
+          type="text"
+          class="form-control"
+          id="subscriberCountryCodeInput"
+          aria-describedby="subscriberCountryCode"
+          placeholder=""
+        />
+      </div>
+
+      <div class="request-response">
+        <p>
+          <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseRequestUserInfo"
+            aria-expanded="false"
+            aria-controls="collapseRequestUserInfo"
+          >
+            Request
+          </button>
+          <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseResponseUserInfo"
+            aria-expanded="false"
+            aria-controls="collapseResponseUserInfo"
+          >
+            Response
+          </button>
+        </p>
+        <div class="col">
+          <div class="row">
+            <div class="collapse multi-collapse" id="collapseRequestUserInfo">
+              <div class="card card-body" style="width: 100%; height: 300px">
+                <div
+                  id="jsoneditor-request-userinfo"
+                  style="width: 100%; height: 400px"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="collapse multi-collapse" id="collapseResponseUserInfo">
+              <div class="card card-body" style="width: 100%; height: 300px">
+                <div
+                  id="jsoneditor-response-userinfo"
+                  style="width: 100%; height: 300px"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="clientSecretInput">Client Secret</label>
-      <input type="text" class="form-control" id="clientSecretInput" aria-describedby="clientSecretInfo" placeholder="client-secret">
-    </div>
-    <div class="form-group">
-      <label for="clientCountrySelect">Client Country Code</label>
-      <select class="form-control" id="clientCountrySelect">
-        <option>AF</option>
-        <option>AX</option>
-        <option>AL</option>
-        <option>DZ</option>
-        <option>AS</option>
-        <option>AD</option>
-        <option>AO</option>
-        <option>AI</option>
-        <option>AQ</option>
-        <option>AG</option>
-        <option>AR</option>
-        <option>AM</option>
-        <option>AW</option>
-        <option>AU</option>
-        <option>AT</option>
-        <option>AZ</option>
-        <option>BS</option>
-        <option>BH</option>
-        <option>BD</option>
-        <option>BB</option>
-        <option>BY</option>
-        <option>BE</option>
-        <option>BZ</option>
-        <option>BJ</option>
-        <option>BM</option>
-        <option>BT</option>
-        <option>BO</option>
-        <option>BA</option>
-        <option>BW</option>
-        <option>BV</option>
-        <option>BR</option>
-        <option>IO</option>
-        <option>BN</option>
-        <option>BG</option>
-        <option>BF</option>
-        <option>BI</option>
-        <option>KH</option>
-        <option>CM</option>
-        <option>CA</option>
-        <option>CV</option>
-        <option>KY</option>
-        <option>CF</option>
-        <option>TD</option>
-        <option>CL</option>
-        <option>CN</option>
-        <option>CX</option>
-        <option>CC</option>
-        <option>CO</option>
-        <option>KM</option>
-        <option>CG</option>
-        <option>CD</option>
-        <option>CK</option>
-        <option>CR</option>
-        <option>CI</option>
-        <option>HR</option>
-        <option>CU</option>
-        <option>CY</option>
-        <option>CZ</option>
-        <option>DK</option>
-        <option>DJ</option>
-        <option>DM</option>
-        <option>DO</option>
-        <option>EC</option>
-        <option>EG</option>
-        <option>SV</option>
-        <option>GQ</option>
-        <option>ER</option>
-        <option>EE</option>
-        <option>ET</option>
-        <option>FK</option>
-        <option>FO</option>
-        <option>FJ</option>
-        <option>FI</option>
-        <option>FR</option>
-        <option>GF</option>
-        <option>PF</option>
-        <option>TF</option>
-        <option>GA</option>
-        <option>GM</option>
-        <option>GE</option>
-        <option>DE</option>
-        <option>GH</option>
-        <option>GI</option>
-        <option>GR</option>
-        <option>GL</option>
-        <option>GD</option>
-        <option>GP</option>
-        <option>GU</option>
-        <option>GT</option>
-        <option>GG</option>
-        <option>GN</option>
-        <option>GW</option>
-        <option>GY</option>
-        <option>HT</option>
-        <option>HM</option>
-        <option>VA</option>
-        <option>HN</option>
-        <option>HK</option>
-        <option>HU</option>
-        <option>IS</option>
-        <option>IN</option>
-        <option>ID</option>
-        <option>IR</option>
-        <option>IQ</option>
-        <option>IE</option>
-        <option>IM</option>
-        <option>IL</option>
-        <option>IT</option>
-        <option>JM</option>
-        <option>JP</option>
-        <option>JE</option>
-        <option>JO</option>
-        <option>KZ</option>
-        <option>KE</option>
-        <option>KI</option>
-        <option>KR</option>
-        <option>KP</option>
-        <option>KW</option>
-        <option>KG</option>
-        <option>LA</option>
-        <option>LV</option>
-        <option>LB</option>
-        <option>LS</option>
-        <option>LR</option>
-        <option>LY</option>
-        <option>LI</option>
-        <option>LT</option>
-        <option>LU</option>
-        <option>MO</option>
-        <option>MK</option>
-        <option>MG</option>
-        <option>MW</option>
-        <option>MY</option>
-        <option>MV</option>
-        <option>ML</option>
-        <option>MT</option>
-        <option>MH</option>
-        <option>MQ</option>
-        <option>MR</option>
-        <option>MU</option>
-        <option>YT</option>
-        <option>MX</option>
-        <option>FM</option>
-        <option>MD</option>
-        <option>MC</option>
-        <option>MN</option>
-        <option>ME</option>
-        <option>MS</option>
-        <option>MA</option>
-        <option>MZ</option>
-        <option>MM</option>
-        <option>NA</option>
-        <option>NR</option>
-        <option>NP</option>
-        <option>NL</option>
-        <option>AN</option>
-        <option>NC</option>
-        <option>NZ</option>
-        <option>NI</option>
-        <option>NE</option>
-        <option>NG</option>
-        <option>NU</option>
-        <option>NF</option>
-        <option>MP</option>
-        <option>NO</option>
-        <option>OM</option>
-        <option>PK</option>
-        <option>PW</option>
-        <option>PS</option>
-        <option>PA</option>
-        <option>PG</option>
-        <option>PY</option>
-        <option>PE</option>
-        <option>PH</option>
-        <option>PN</option>
-        <option>PL</option>
-        <option>PT</option>
-        <option>PR</option>
-        <option>QA</option>
-        <option>RE</option>
-        <option>RO</option>
-        <option>RU</option>
-        <option>RW</option>
-        <option>BL</option>
-        <option>SH</option>
-        <option>KN</option>
-        <option>LC</option>
-        <option>MF</option>
-        <option>PM</option>
-        <option>VC</option>
-        <option>WS</option>
-        <option>SM</option>
-        <option>ST</option>
-        <option>SA</option>
-        <option>SN</option>
-        <option>RS</option>
-        <option>SC</option>
-        <option>SL</option>
-        <option>SG</option>
-        <option>SK</option>
-        <option>SI</option>
-        <option>SB</option>
-        <option>SO</option>
-        <option>ZA</option>
-        <option>GS</option>
-        <option>ES</option>
-        <option>LK</option>
-        <option>SD</option>
-        <option>SR</option>
-        <option>SJ</option>
-        <option>SZ</option>
-        <option>SE</option>
-        <option>CH</option>
-        <option>SY</option>
-        <option>TW</option>
-        <option>TJ</option>
-        <option>TZ</option>
-        <option>TH</option>
-        <option>TL</option>
-        <option>TG</option>
-        <option>TK</option>
-        <option>TO</option>
-        <option>TT</option>
-        <option>TN</option>
-        <option>TR</option>
-        <option>TM</option>
-        <option>TC</option>
-        <option>TV</option>
-        <option>UG</option>
-        <option>UA</option>
-        <option>AE</option>
-        <option>GB</option>
-        <option>US</option>
-        <option>UM</option>
-        <option>UY</option>
-        <option>UZ</option>
-        <option>VU</option>
-        <option>VE</option>
-        <option>VN</option>
-        <option>VG</option>
-        <option>VI</option>
-        <option>WF</option>
-        <option>EH</option>
-        <option>YE</option>
-        <option>ZM</option>
-        <option>ZW</option>
-      </select>
-    </div>
-    <button onclick = 'saveClient()' class='btn btn-primary' >Save Client</button>
-  </div>
-  <div class="login">
-    <h1>Part 2: Login User</h1>
-    <p>You will be redirected to your application login page</p>
-    <button onclick = 'redirectToLogin()' class='btn btn-primary' >Login</button>
-    <div class="form-group">
-      <label for="code">Authorization Code</label>
-      <input readonly type="text" class="form-control" id="code" aria-describedby="authorizationCode" placeholder="">
-    </div>
-  </div>
-  <div class="generate-token">
-    <h1>Part 3: Generate Authentication Token</h1>
-    <p>The Authorization Code will be used to generate an authentication token for the user, and must be revoked after one use</p>
-    <button onclick = 'generateToken()' class='btn btn-primary' >Token</button>
-    <div class="form-group">
-      <label for="token">Token</label>
-      <input readonly type="text" class="form-control" id="token" aria-describedby="token" placeholder="">
-    </div>
-  </div>
-  <div class="user-info">
-    <h1>Part 4: Get User Information</h1>
-    <p>The Authentication Token will be used to get the user information</p>
-    <button onclick = 'getUserInfo()' class='btn btn-primary' >UserInfo</button>
-    <div class="form-group">
-      <label for="subscriberIdInput">Subscriber Id</label>
-      <input readonly type="text" class="form-control" id="subscriberIdInput" aria-describedby="subscriberIdInput" placeholder="">
-    </div>
-    <div class="form-group">
-      <label for="subscriberCountryCodeInput">Country Code</label>
-      <input readonly type="text" class="form-control" id="subscriberCountryCodeInput" aria-describedby="subscriberCountryCode" placeholder="">
-    </div>
-  </div>
-  <script src="index.js"> </script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.7.4/jsoneditor.min.js"
+      integrity="sha512-KQaWlVsZF0iPXCR8p176hVrg/rlw+smy8dpJ+vwiuvoHyGr8PTVvaAV4ZmsAYdCvMRP8e3sB9pl1mRuaunaXrg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./index.js"></script>
+  </body>
 </html>

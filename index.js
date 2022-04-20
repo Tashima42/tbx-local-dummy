@@ -1,13 +1,34 @@
-var globalClient
-var queryParams
+var globalClient = null
+var queryParams = null
+
+var jsonEditor = {
+  token: {
+    request: null,
+    response: null,
+  },
+  userInfo: {
+    request: null,
+    response: null,
+  }
+}
 
 main()
 
+
+
 function main() {
-  loadClient()
+  loadJsonEditors()
   loadQueryParams()
+  loadClient()
   validateState()
   loadAuthorizationCode()
+}
+
+function loadJsonEditors() {
+  jsonEditor.token.request = initJsonEditorRequestToken()
+  jsonEditor.token.response = initJsonEditorResponseToken()
+  jsonEditor.userInfo.request = initJsonEditorRequestUserInfo()
+  jsonEditor.userInfo.response = initJsonEditorResponseUserInfo()
 }
 
 function loadQueryParams() {
@@ -43,6 +64,8 @@ function loadClient() {
     document.querySelector("#clientSecretInput").value = client.secret
   if (client.countryCode && client.countryCode.length > 0)
     document.querySelector("#clientCountrySelect").value = client.countryCode
+  
+  updateJsonEditorRequestToken()
 }
 
 function saveClient() {
@@ -123,8 +146,12 @@ function generateToken() {
       token = res.access_token
       tokenType = res.token_type
       refreshToken = res.refresh_token
+      // TODO: expires 
       localStorage.setItem("token", token)
       document.getElementById('token').value = token
+
+      updateJsonEditorResponseToken({token, tokenType, refreshToken})
+      updateJsonEditorRequestUserInfo()
     })
 }
 
@@ -142,5 +169,77 @@ function getUserInfo() {
       country_code = res.country_code
       document.getElementById('subscriberIdInput').value = subscriber_id
       document.getElementById('subscriberCountryCodeInput').value = country_code
+
+      updateJsonEditorResponseUserInfo({subscriber_id, country_code})
     })
+}
+
+function updateJsonEditorRequestToken() {
+  const json = {
+    url: globalClient.endpoints.token,
+    body: `code=${queryParams.code}&client_secret=${globalClient.secret}&client_id=${globalClient.id}&grant_type=authorization_code`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  }
+  jsonEditor.token.request.set(json)   
+}
+
+function updateJsonEditorResponseToken({token, tokenType, refreshToken}) {
+  const json = {
+    body: {
+      token,
+      tokenType,
+      refreshToken
+    },
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+  jsonEditor.token.response.set(json)   
+}
+
+function updateJsonEditorRequestUserInfo() {
+  const json = {
+    url: globalClient.endpoints.token,
+    body: `code=${queryParams.code}&client_secret=${globalClient.secret}&client_id=${globalClient.id}&grant_type=authorization_code`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  }
+  jsonEditor.userInfo.request.set(json)   
+}
+
+function updateJsonEditorResponseUserInfo({subscriber_id, country_code}) {
+  const json = {
+    body: {
+      subscriber_id,
+      country_code
+    },
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+  jsonEditor.userInfo.response.set(json)   
+}
+
+function initJsonEditorRequestToken() {
+  const container = document.getElementById("jsoneditor-request-token")
+  const options = {}
+  return new JSONEditor(container, options)
+}
+function initJsonEditorResponseToken() {
+  const container = document.getElementById("jsoneditor-response-token")
+  const options = {}
+  return new JSONEditor(container, options)
+}
+function initJsonEditorRequestUserInfo() {
+  const container = document.getElementById("jsoneditor-request-userinfo")
+  const options = {}
+  return new JSONEditor(container, options)
+}
+function initJsonEditorResponseUserInfo() {
+  const container = document.getElementById("jsoneditor-response-userinfo")
+  const options = {}
+  return new JSONEditor(container, options)
 }
