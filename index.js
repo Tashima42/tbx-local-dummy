@@ -225,21 +225,29 @@ function updateJsonEditorResponseUserInfo({subscriber_id, country_code}) {
 
 function initJsonEditorRequestToken() {
   const container = document.getElementById("jsoneditor-request-token")
-  const options = {}
-  return new JSONEditor(container, options)
+  const options = {mode: "code"}
+  const editor = new JSONEditor(container, options)
+  editor.aceEditor.setReadOnly(true)
+  return editor
 }
 function initJsonEditorResponseToken() {
   const container = document.getElementById("jsoneditor-response-token")
-  const options = {}
-  return new JSONEditor(container, options)
+  const options = {mode: "code"}
+  const editor = new JSONEditor(container, options)
+  editor.aceEditor.setReadOnly(true)
+  return editor
 }
 function initJsonEditorRequestUserInfo() {
   const container = document.getElementById("jsoneditor-request-userinfo")
-  const options = {}
-  return new JSONEditor(container, options)
+  const options = {mode: "code"}
+  const editor = new JSONEditor(container, options)
+  editor.aceEditor.setReadOnly(true)
+  return editor
 }
 function initJsonEditorResponseUserInfo() {
   const container = document.getElementById("jsoneditor-response-userinfo")
-  const options = {}
-  return new JSONEditor(container, options)
+  const options = {mode: "code"}
+  const editor = new JSONEditor(container, options)
+  editor.aceEditor.setReadOnly(true)
+  return editor
 }
