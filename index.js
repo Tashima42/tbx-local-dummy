@@ -90,7 +90,7 @@ function generateState() {
 function validateState() {
   const state = queryParams.state
   const savedState = localStorage.getItem("state")
-  if (!state && !savedState) return
+  if (!state || !savedState) return
   if (state != savedState) alert("invalid state")
 }
 
@@ -114,7 +114,7 @@ function generateToken() {
     method: 'POST',
     body: `code=${queryParams.code}&client_secret=${globalClient.secret}&client_id=${globalClient.id}&grant_type=authorization_code`,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',  // This is REALLY important
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
   })
     .then(res => res.json())
