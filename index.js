@@ -96,7 +96,7 @@ function validateState() {
 
 function loadAuthorizationCode() {
   const code = queryParams.code
-  if (code) document.querySelector("#code").innerHTML = code
+  if (code) document.querySelector("#code").value = code
 }
 
 function generateRandomString(length) {
@@ -123,7 +123,7 @@ function generateToken() {
       tokenType = res.token_type
       refreshToken = res.refresh_token
       localStorage.setItem("token", token)
-      document.getElementById('token').innerText = token
+      document.getElementById('token').value = token
     })
 }
 
@@ -139,7 +139,7 @@ function getUserInfo() {
     .then(res => {
       subscriber_id = res.subscriber_id
       country_code = res.country_code
-      document.getElementById('subscriber_id').innerText = subscriber_id
-      document.getElementById('country_code').innerText = country_code
+      document.getElementById('subscriberIdInput').value = subscriber_id
+      document.getElementById('subscriberCountryCodeInput').value = country_code
     })
 }

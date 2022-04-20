@@ -4,6 +4,14 @@
   <meta charset="utf-8">
   <title>Local Dummy</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    .info {
+      background-color:  #d5d8de;
+      border-radius: 5px;
+      margin-top: 5px;
+      padding-left: 2px;
+    }
+  </style>
 </head>
 <body class='container'>
   <div class="configure-client">
@@ -287,20 +295,32 @@
     <h1>Part 2: Login User</h1>
     <p>You will be redirected to your application to login</p>
     <button onclick = 'redirectToLogin()' class='btn btn-primary' >Login</button>
-    <p>Authorization Code: <span id='code'></span></p>
+    <div class="form-group">
+      <label for="code">Authorization Code</label>
+      <input type="text" class="form-control" id="code" aria-describedby="authorizationCode" placeholder="">
+    </div>
   </div>
   <div class="generate-token">
     <h1>Part 3: Generate Authentication Token</h1>
     <p>The Authorization Code will be used to generate an authentication token for the user</p>
     <button onclick = 'generateToken()' class='btn btn-primary' >Token</button>
-    <p>Token: <span id='token'></span></p>
+    <div class="form-group">
+      <label for="token">Token</label>
+      <input type="text" class="form-control" id="token" aria-describedby="token" placeholder="">
+    </div>
   </div>
   <div class="user-info">
     <h1>Part 4: Get User Information</h1>
     <p>The Authentication Token will be used to get the user information</p>
     <button onclick = 'getUserInfo()' class='btn btn-primary' >UserInfo</button>
-    <p>Subscriber Id: <span id='subscriber_id'></span></p>
-    <p>Country Code: <span id='country_code'></span></p>
+    <div class="form-group">
+      <label for="subscriberIdInput">Subscriber Id</label>
+      <input type="text" class="form-control" id="subscriberIdInput" aria-describedby="subscriberIdInput" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="subscriberCountryCodeInput">Country Code</label>
+      <input type="text" class="form-control" id="subscriberCountryCodeInput" aria-describedby="subscriberCountryCode" placeholder="">
+    </div>
   </div>
   <script src="index.js"> </script>
 </body>
