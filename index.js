@@ -61,9 +61,10 @@ function saveClient() {
 }
 
 function redirectToLogin() {
+  const currentUrl = window.location.href.split("?")[0]
   const query = {
-    redirect_uri: window.location.href,
-    failureRedirect: window.location.href,
+    redirect_uri: currentUrl,
+    failureRedirect: currentUrl,
     country: globalClient.countryCode,
     response_type: "code",
     client_id: globalClient.id,
