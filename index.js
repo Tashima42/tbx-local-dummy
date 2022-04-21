@@ -81,6 +81,7 @@ function saveClient() {
   }
   localStorage.setItem("client", JSON.stringify(client))
   loadClient()
+  document.querySelector(".warning-redirect").style.display = "block"
 }
 
 function redirectToLogin() {

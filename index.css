@@ -70,6 +70,7 @@ h1 {
 .warning-redirect {
   width: 100%;
   height: 100px;
+  display: none;
 }
 .warning-redirect a {
   color: black;
