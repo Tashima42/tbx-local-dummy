@@ -84,7 +84,7 @@ function saveClient() {
 }
 
 function redirectToLogin() {
-  const currentUrl = window.location.href.split("?")[0]
+  const currentUrl = window.location.href.split("?")[0].split("#")[0]
   const query = {
     redirect_uri: currentUrl,
     failureRedirect: currentUrl,
@@ -223,31 +223,69 @@ function updateJsonEditorResponseUserInfo({subscriber_id, country_code}) {
   jsonEditor.userInfo.response.set(json)   
 }
 
+function generateTokenCurl() {
+  const baseUrl = globalClient.endpoints.token
+  const clientId = globalClient.id
+  const clientSecret = globalClient.secret
+  const code = queryParams.code
+  return `curl --location --request POST '${baseUrl}' \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode 'client_id=${clientId}' \
+  --data-urlencode 'client_secret=${clientSecret}' \
+  --data-urlencode 'grant_type=code' \
+  --data-urlencode 'code=${code}'`
+}
+
+function generateUserInfoCurl() {
+  const baseUrl = globalClient.endpoints.userInfo
+  const token = localStorage.getItem('token')
+  return `curl --location --request GET '${baseUrl}' \
+  --header 'Authorization: Bearer ${token}'` 
+}
+
+function copyTokenCurl() {
+  const tokenCurl = generateTokenCurl()
+  navigator.clipboard.writeText(tokenCurl);
+  showToast("Copied Get Token CURL to clipboard")
+}
+
+function copyUserInfoCurl() {
+  const userInfoCurl = generateUserInfoCurl()
+  navigator.clipboard.writeText(userInfoCurl);
+  showToast("Copied Get UserInfo CURL to clipboard")
+}
+
 function initJsonEditorRequestToken() {
   const container = document.getElementById("jsoneditor-request-token")
-  const options = {mode: "code"}
+  const options = {mode: "code", mainMenuBar: false}
   const editor = new JSONEditor(container, options)
   editor.aceEditor.setReadOnly(true)
   return editor
 }
 function initJsonEditorResponseToken() {
   const container = document.getElementById("jsoneditor-response-token")
-  const options = {mode: "code"}
+  const options = {mode: "code", mainMenuBar: false}
   const editor = new JSONEditor(container, options)
   editor.aceEditor.setReadOnly(true)
   return editor
 }
 function initJsonEditorRequestUserInfo() {
   const container = document.getElementById("jsoneditor-request-userinfo")
-  const options = {mode: "code"}
+  const options = {mode: "code", mainMenuBar: false}
   const editor = new JSONEditor(container, options)
   editor.aceEditor.setReadOnly(true)
   return editor
 }
 function initJsonEditorResponseUserInfo() {
   const container = document.getElementById("jsoneditor-response-userinfo")
-  const options = {mode: "code"}
+  const options = {mode: "code", mainMenuBar: false}
   const editor = new JSONEditor(container, options)
   editor.aceEditor.setReadOnly(true)
   return editor
+}
+
+function showToast(bodyMessage) {
+  var toastLiveExample = document.getElementById('liveToast')
+  document.getElementById("toast-body").innerText = bodyMessage
+  new bootstrap.Toast(toastLiveExample).show()
 }
