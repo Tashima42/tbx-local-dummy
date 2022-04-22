@@ -27,7 +27,10 @@
       </div>
     </header>
     <div class="configure-client">
-      <h1>Part 1: Configure Oauth2 Provider and Client</h1>
+      <div class="part-title">
+        <input class="form-check-input" type="checkbox" onclick="return false;" id="configure-client-checkbox" >
+        <h1>Part 1: Configure Oauth2 Provider and Client</h1>
+      </div>
       <p>Here you need to insert your Oauth2 Provider and Client information</p>
       <div class="card text-white bg-toolbox-danger mb-1 warning-redirect">
         <div class="card-header">Attention</div>
@@ -343,6 +346,13 @@
           <option>ZW</option>
         </select>
       </div>
+
+      <div class="configure-client-problems problems-list">
+        <h3>Problems</h3>
+        <ul id="configure-client-problems" class="list-group">
+        </ul>
+      </div>
+
       <button
         onclick="saveClient()"
         class="btn btn-toolbox-primary save-client"
@@ -350,9 +360,20 @@
         Save Client
       </button>
     </div>
+    <hr>
     <div class="login">
-      <h1>Part 2: Login User</h1>
+      <div class="part-title">
+        <input class="form-check-input" type="checkbox" onclick="return false;" id="login-checkbox">
+        <h1>Part 2: Login User</h1>
+      </div>
       <p>You will be redirected to your application login page</p>
+
+      <div class="login-problems problems-list">
+        <h3>Problems</h3>
+        <ul id="login-problems" class="list-group">
+        </ul>
+      </div>
+
       <button onclick="redirectToLogin()" class="btn btn-toolbox-primary">
         Login
       </button>
@@ -368,14 +389,25 @@
         />
       </div>
     </div>
+    <hr>
     <div class="generate-token">
-      <h1>Part 3: Generate Authentication Token</h1>
+      <div class="part-title">
+        <input class="form-check-input" type="checkbox" onclick="return false;" id="generate-token-checkbox">
+        <h1>Part 3: Generate Authentication Token</h1>
+      </div>
       <p>
         The Authorization Code will be used to generate an authentication token
         for the user, and must be revoked after one use
       </p>
 
-        <button onclick="generateToken()" class="btn btn-toolbox-primary">
+      <div class="generate-token-problems problems-list">
+        <h3>Problems</h3>
+        <ul id="generate-token-problems" class="list-group">
+          <li class="list-group-item" id="generate-token-problems-press">Press the 'Get Token' button</li>
+        </ul>
+      </div>
+
+        <button onclick="getToken()" class="btn btn-toolbox-primary">
           Get Token
         </button>
 
@@ -440,10 +472,20 @@
           </button>
         </p>
       </div>
+    <hr>
       <div class="user-info">
+      <div class="part-title">
+        <input class="form-check-input" type="checkbox" onclick="return false;" id="user-info-checkbox">
         <h1>Part 4: Get User Information</h1>
+      </div>
         <p>The Authentication Token will be used to get the user information</p>
 
+      <div class="user-info-problems problems-list">
+        <h3>Problems</h3>
+        <ul id="user-info-problems" class="list-group">
+          <li class="list-group-item" id="user-info-problems-press">Press the 'Get User Info' button</li>
+        </ul>
+      </div>
 
       <button onclick="getUserInfo()" class="btn btn-toolbox-primary">
         Get User Info

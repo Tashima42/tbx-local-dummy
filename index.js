@@ -1,5 +1,17 @@
-var globalClient = null
-var queryParams = null
+var globalClient = {
+  id: null,
+  secret: null,
+  countryCode: null,
+  endpoints: {
+    authorize: null,
+    token: null,
+    userInfo: null
+  }
+}
+var queryParams = {
+  code: null,
+  state: null
+}
 
 var jsonEditor = {
   token: {
@@ -14,21 +26,12 @@ var jsonEditor = {
 
 main()
 
-
-
 function main() {
   loadJsonEditors()
   loadQueryParams()
   loadClient()
-  validateState()
   loadAuthorizationCode()
-}
-
-function loadJsonEditors() {
-  jsonEditor.token.request = initJsonEditor("jsoneditor-request-token")
-  jsonEditor.token.response =  initJsonEditor("jsoneditor-response-token")
-  jsonEditor.userInfo.request =  initJsonEditor("jsoneditor-request-userinfo")
-  jsonEditor.userInfo.response = initJsonEditor("jsoneditor-response-userinfo")
+  evaluateSteps()
 }
 
 function loadQueryParams() {
@@ -64,7 +67,7 @@ function loadClient() {
     document.querySelector("#clientSecretInput").value = client.secret
   if (client.countryCode && client.countryCode.length > 0)
     document.querySelector("#clientCountrySelect").value = client.countryCode
-  
+
   updateJsonEditorRequestToken()
 }
 
@@ -81,7 +84,7 @@ function saveClient() {
   }
   localStorage.setItem("client", JSON.stringify(client))
   loadClient()
-  document.querySelector(".warning-redirect").style.display = "block"
+  evaluateConfigureClient()
 }
 
 function redirectToLogin() {
@@ -115,8 +118,8 @@ function generateState() {
 function validateState() {
   const state = queryParams.state
   const savedState = localStorage.getItem("state")
-  if (!state || !savedState) return
-  if (state != savedState) alert("invalid state")
+  if (!state || !savedState || state != savedState) return false
+  return true
 }
 
 function loadAuthorizationCode() {
@@ -133,7 +136,7 @@ function generateRandomString(length) {
   }
   return result;
 }
-function generateToken() {
+function getToken() {
 
   fetch(globalClient.endpoints.token, {
     method: 'POST',
@@ -144,14 +147,17 @@ function generateToken() {
   })
     .then(res => res.json())
     .then(res => {
-      token = res.access_token
-      tokenType = res.token_type
-      refreshToken = res.refresh_token
-      // TODO: expires 
-      localStorage.setItem("token", token)
+      const response = {
+        token: res.access_token,
+        tokenType: res.token_type,
+        refreshToken: res.refresh_token,
+        // TODO: expires 
+      }
+      localStorage.setItem("token", response.token)
 
-      updateJsonEditorResponseToken({token, tokenType, refreshToken})
+      updateJsonEditorResponseToken(response)
       updateJsonEditorRequestUserInfo()
+      evaluateGetToken(response.token)
     })
 }
 
@@ -168,7 +174,8 @@ function getUserInfo() {
       subscriber_id = res.subscriber_id
       country_code = res.country_code
 
-      updateJsonEditorResponseUserInfo({subscriber_id, country_code})
+      updateJsonEditorResponseUserInfo({ subscriber_id, country_code })
+      evaluateGetUserInfo({ subscriber_id, country_code })
     })
 }
 
@@ -180,10 +187,10 @@ function updateJsonEditorRequestToken() {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   }
-  jsonEditor.token.request.set(json)   
+  jsonEditor.token.request.set(json)
 }
 
-function updateJsonEditorResponseToken({token, tokenType, refreshToken}) {
+function updateJsonEditorResponseToken({ token, tokenType, refreshToken }) {
   const json = {
     body: {
       token,
@@ -194,7 +201,7 @@ function updateJsonEditorResponseToken({token, tokenType, refreshToken}) {
       'Content-Type': 'application/json',
     },
   }
-  jsonEditor.token.response.set(json)   
+  jsonEditor.token.response.set(json)
 }
 
 function updateJsonEditorRequestUserInfo() {
@@ -205,10 +212,10 @@ function updateJsonEditorRequestUserInfo() {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   }
-  jsonEditor.userInfo.request.set(json)   
+  jsonEditor.userInfo.request.set(json)
 }
 
-function updateJsonEditorResponseUserInfo({subscriber_id, country_code}) {
+function updateJsonEditorResponseUserInfo({ subscriber_id, country_code }) {
   const json = {
     body: {
       subscriber_id,
@@ -218,7 +225,7 @@ function updateJsonEditorResponseUserInfo({subscriber_id, country_code}) {
       'Content-Type': 'application/json',
     },
   }
-  jsonEditor.userInfo.response.set(json)   
+  jsonEditor.userInfo.response.set(json)
 }
 
 function generateTokenCurl() {
@@ -238,7 +245,7 @@ function generateUserInfoCurl() {
   const baseUrl = globalClient.endpoints.userInfo
   const token = localStorage.getItem('token')
   return `curl --location --request GET '${baseUrl}' \
-  --header 'Authorization: Bearer ${token}'` 
+  --header 'Authorization: Bearer ${token}'`
 }
 
 function copyTokenCurl() {
@@ -267,7 +274,7 @@ function copyUserInfoResponse() {
 
 function initJsonEditor(elementId) {
   const container = document.getElementById(elementId)
-  const options = {mode: "code", mainMenuBar: false, statusBar: false}
+  const options = { mode: "code", mainMenuBar: false, statusBar: false }
   const editor = new JSONEditor(container, options)
   editor.aceEditor.setReadOnly(true)
   editor.aceEditor.renderer.setShowGutter(false)
@@ -279,4 +286,225 @@ function showToast(bodyMessage) {
   var toastLiveExample = document.getElementById('liveToast')
   document.getElementById("toast-body").innerText = bodyMessage
   new bootstrap.Toast(toastLiveExample).show()
+}
+
+
+
+function changeBoxState(boxId, state) {
+  document.getElementById(boxId).checked = state
+}
+function validateString(string) {
+  if (!string) return false
+  if (typeof string != "string") return false
+  if (string.length < 1) return false
+  return true
+}
+
+function addProblemElementToList({ listId, elementMessage, elementId }) {
+  if (document.getElementById(elementId)) return
+  const node = document.createElement("li");
+  const textnode = document.createTextNode(elementMessage);
+  node.classList.add("list-group-item")
+  node.appendChild(textnode);
+  node.setAttribute('id', elementId)
+  document.getElementById(listId).appendChild(node);
+}
+
+function removeById(elementId) {
+  const element = document.getElementById(elementId)
+  if (element) element.remove()
+}
+
+function evaluateLogin() {
+  const listId = "login-problems"
+  let validStep = true
+  const validations = [
+    {
+      elementId: "login-problems-state",
+      elementMessage: "Invalid or missing State",
+      valid: validateState()
+    },
+    {
+      elementId: "login-problems-code",
+      elementMessage: "Missing Authorization Code",
+      valid: validateString(queryParams.code)
+    },
+  ]
+
+  validations.forEach(({ elementMessage, elementId, valid }) => {
+    changeProblemsStepInformation({
+      valid,
+      listId,
+      elementId,
+      elementMessage,
+    })
+    if (valid === false) validStep = false
+  })
+
+  changeProblemsValidState({
+    problemsSelector: ".login-problems",
+    elementId: "login-problems-ok",
+    valid: validStep,
+    listId,
+    checkBoxId: "login-checkbox"
+  })
+}
+function evaluateConfigureClient() {
+  const listId = "configure-client-problems"
+  let validStep = true
+  const validations = [
+    {
+      elementId: "configure-client-problems-id",
+      elementMessage: "Missing Client Id",
+      valid: validateString(globalClient.id)
+    },
+    {
+      elementMessage: "Missing Client Secret",
+      elementId: "configure-client-problems-secret",
+      valid: validateString(globalClient.secret)
+    },
+    {
+      elementMessage: "Missing Client CountryCode",
+      elementId: "configure-client-problems-countrycode",
+      valid: validateString(globalClient.countryCode),
+    },
+    {
+      elementMessage: "Missing Authorize endpoint",
+      elementId: "configure-client-problems-authorize",
+      valid: validateString(globalClient.endpoints.authorize)
+    },
+    {
+      elementMessage: "Missing Token endpoint",
+      elementId: "configure-client-problems-token",
+      valid: validateString(globalClient.endpoints.token)
+    },
+    {
+      elementMessage: "Missing UserInfo endpoint",
+      elementId: "configure-client-problems-userinfo",
+      valid: validateString(globalClient.endpoints.userInfo)
+    },
+  ]
+
+  validations.forEach(({ elementMessage, elementId, valid }) => {
+    changeProblemsStepInformation({
+      valid,
+      listId,
+      elementId,
+      elementMessage
+    })
+    if (valid === false) validStep = false
+  })
+
+  changeProblemsValidState({
+    problemsSelector: ".configure-client-problems",
+    elementId: "configure-client-problems-ok",
+    valid: validStep,
+    listId,
+    checkBoxId: "configure-client-checkbox"
+  })
+}
+function evaluateGetToken(token) {
+  const listId = "generate-token-problems"
+  let validStep = true
+  const validations = [
+    {
+      elementId: "generate-token-problems-token",
+      elementMessage: "Invalid or missing Token",
+      valid: validateString(token)
+    },
+  ]
+
+  validations.forEach(({ elementMessage, elementId, valid }) => {
+    changeProblemsStepInformation({
+      valid,
+      listId,
+      elementId,
+      elementMessage,
+    })
+    if (valid === false) validStep = false
+  })
+
+  removeById("generate-token-problems-press")
+  changeProblemsValidState({
+    problemsSelector: ".generate-token-problems",
+    elementId: "generate-token-problems-ok",
+    valid: validStep,
+    listId,
+    checkBoxId: "generate-token-checkbox"
+  })
+}
+function evaluateGetUserInfo({subscriber_id, country_code}) {
+  const listId = "user-info-problems"
+  let validStep = true
+  const validations = [
+    {
+      elementId: "user-info-problems-subscriberid",
+      elementMessage: "Invalid or missing Subscriber Id",
+      valid: validateString(subscriber_id)
+    },
+    {
+      elementId: "user-info-problems-countrycode",
+      elementMessage: "Invalid or missing Country Code",
+      valid: validateString(country_code)
+    },
+  ]
+
+  validations.forEach(({ elementMessage, elementId, valid }) => {
+    changeProblemsStepInformation({
+      valid,
+      listId,
+      elementId,
+      elementMessage,
+    })
+    if (valid === false) validStep = false
+  })
+
+  removeById("user-info-problems-press")
+  changeProblemsValidState({
+    problemsSelector: ".user-info-problems",
+    elementId: "user-info-problems-ok",
+    valid: validStep,
+    listId,
+    checkBoxId: "user-info-checkbox"
+  })
+}
+
+function changeProblemsStepInformation({ valid, elementMessage, listId, elementId }) {
+  if (!valid) {
+    addProblemElementToList({
+      elementMessage,
+      listId,
+      elementId
+    })
+  } else {
+    removeById(elementId)
+  }
+}
+
+function changeProblemsValidState({ problemsSelector, elementId, valid, listId, checkBoxId }) {
+  if (valid) {
+    addProblemElementToList({
+      listId,
+      elementMessage: "Everything is OK",
+      elementId
+    })
+    document.querySelector(problemsSelector).style["border-color"] = "blue"
+    changeBoxState(checkBoxId, true)
+  } else {
+    document.querySelector(problemsSelector).style["border-color"] = "red"
+    removeById(elementId)
+    changeBoxState(checkBoxId, false)
+  }
+}
+
+function loadJsonEditors() {
+  jsonEditor.token.request = initJsonEditor("jsoneditor-request-token")
+  jsonEditor.token.response = initJsonEditor("jsoneditor-response-token")
+  jsonEditor.userInfo.request = initJsonEditor("jsoneditor-request-userinfo")
+  jsonEditor.userInfo.response = initJsonEditor("jsoneditor-response-userinfo")
+}
+
+function evaluateSteps() {
+  evaluateConfigureClient()
+  evaluateLogin()
 }
