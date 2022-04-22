@@ -107,3 +107,19 @@ h1 {
 .btn-toggle {
   display: none;
 }
+
+.spinner-border {
+  display: none;
+}
+
+.btn-token {
+  width: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.btn-userinfo {
+  width: 130px;
+  margin-left: 10px;
+  margin-right: 10px;
+}

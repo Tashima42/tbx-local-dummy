@@ -407,9 +407,14 @@
         </ul>
       </div>
 
-        <button onclick="getToken()" class="btn btn-toolbox-primary">
+      <div class="row">
+        <button onclick="getToken()" class="btn btn-toolbox-primary btn-token">
           Get Token
         </button>
+        <div class="spinner-border text-danger" id="loading-token" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
 
       <div class="request-response">
         <div class="col">
@@ -418,7 +423,7 @@
               <div class="card card-body">
                 <div class="col">
                   <button
-                    class="btn btn-secondary copy-curl"
+                    class="btn btn-outline-danger copy-curl"
                     type="button"
                     onclick="copyTokenCurl()"
                   >
@@ -437,7 +442,7 @@
               <div class="card card-body">
                 <div class="col">
                   <button
-                    class="btn btn-secondary copy-curl"
+                    class="btn btn-outline-danger copy-curl"
                     type="button"
                     onclick="copyTokenResponse()"
                   >
@@ -487,9 +492,14 @@
         </ul>
       </div>
 
-      <button onclick="getUserInfo()" class="btn btn-toolbox-primary">
-        Get User Info
-      </button>
+      <div class="row">
+        <button onclick="getUserInfo()" class="btn btn-toolbox-primary btn-userinfo">
+          Get User Info
+        </button>
+        <div class="spinner-border text-danger" id="loading-userinfo" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
 
         <div class="request-response">
           <div class="col">
@@ -501,7 +511,7 @@
                 <div class="card card-body">
                   <div class="col">
                     <button
-                      class="btn btn-secondary copy-curl"
+                      class="btn btn-outline-danger copy-curl"
                       type="button"
                       onclick="copyUserInfoCurl()"
                     >
@@ -523,7 +533,7 @@
                 <div class="card card-body">
                   <div class="col">
                   <button
-                    class="btn btn-secondary copy-curl"
+                    class="btn btn-outline-danger copy-curl"
                     type="button"
                     onclick="copyUserInfoResponse()"
                   >

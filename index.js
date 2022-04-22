@@ -137,6 +137,7 @@ function generateRandomString(length) {
   return result;
 }
 function getToken() {
+  document.getElementById("loading-token").style.display = "block";
 
   fetch(globalClient.endpoints.token, {
     method: 'POST',
@@ -147,10 +148,12 @@ function getToken() {
   })
     .then(res => res.json())
     .then(res => {
+      console.log(res)
       const response = {
         token: res.access_token,
         tokenType: res.token_type,
         refreshToken: res.refresh_token,
+        statusCode: res.status
         // TODO: expires 
       }
       localStorage.setItem("token", response.token)
@@ -158,10 +161,12 @@ function getToken() {
       updateJsonEditorResponseToken(response)
       updateJsonEditorRequestUserInfo()
       evaluateGetToken(response.token)
+      document.getElementById("loading-token").style.display = "none";
     })
 }
 
 function getUserInfo() {
+  document.getElementById("loading-userinfo").style.display = "block";
 
   fetch(globalClient.endpoints.userInfo, {
     method: 'GET',
@@ -176,6 +181,7 @@ function getUserInfo() {
 
       updateJsonEditorResponseUserInfo({ subscriber_id, country_code })
       evaluateGetUserInfo({ subscriber_id, country_code })
+      document.getElementById("loading-userinfo").style.display = "none";
     })
 }
 
@@ -190,13 +196,14 @@ function updateJsonEditorRequestToken() {
   jsonEditor.token.request.set(json)
 }
 
-function updateJsonEditorResponseToken({ token, tokenType, refreshToken }) {
+function updateJsonEditorResponseToken({ token, tokenType, refreshToken, statusCode }) {
   const json = {
     body: {
       token,
       tokenType,
       refreshToken
     },
+    statusCode,
     headers: {
       'Content-Type': 'application/json',
     },
