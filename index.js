@@ -250,10 +250,22 @@ function copyTokenCurl() {
   showToast("Copied Get Token CURL to clipboard")
 }
 
+function copyTokenResponse() {
+  const tokenResponse = JSON.stringify(jsonEditor.token.response.get())
+  navigator.clipboard.writeText(tokenResponse);
+  showToast("Copied Get Token Response to clipboard")
+}
+
 function copyUserInfoCurl() {
   const userInfoCurl = generateUserInfoCurl()
   navigator.clipboard.writeText(userInfoCurl);
   showToast("Copied Get UserInfo CURL to clipboard")
+}
+
+function copyUserInfoResponse() {
+  const userInfoResponse = JSON.stringify(jsonEditor.userInfo.response.get())
+  navigator.clipboard.writeText(userInfoResponse);
+  showToast("Copied Get UserInfo Response to clipboard")
 }
 
 function initJsonEditorRequestToken() {

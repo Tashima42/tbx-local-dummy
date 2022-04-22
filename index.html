@@ -425,86 +425,101 @@
                   <button
                     class="btn btn-secondary copy-curl"
                     type="button"
-                    onclick="copyTokenCurl()"
+                    onclick="copyTokenResponse()"
                   >
                     Copy Response
                   </button>
-                <div class="jsoneditor" id="jsoneditor-response-token"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button onclick="generateToken()" class="btn btn-toolbox-primary">
-        Get Token
-      </button>
-      <div class="form-group">
-        <label for="token">Token</label>
-        <input
-          readonly
-          type="text"
-          class="form-control"
-          id="token"
-          aria-describedby="token"
-          placeholder=""
-        />
-      </div>
-    </div>
-    <div class="user-info">
-      <h1>Part 4: Get User Information</h1>
-      <p>The Authentication Token will be used to get the user information</p>
-
-      <div class="request-response">
-        <p>
-          <button
-            class="btn btn-secondary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseRequestUserInfo"
-            aria-expanded="false"
-            aria-controls="collapseRequestUserInfo"
-          >
-            Toggle Request
-          </button>
-          <button
-            class="btn btn-secondary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseResponseUserInfo"
-            aria-expanded="false"
-            aria-controls="collapseResponseUserInfo"
-          >
-            Toggle Response
-          </button>
-        </p>
-        <div class="col">
-          <div class="row">
-            <div
-              class="collapse multi-collapse show"
-              id="collapseRequestUserInfo"
-            >
-              <div class="card card-body">
-                <div class="col">
-                  <button
-                    class="btn btn-secondary copy-curl"
-                    type="button"
-                    onclick="copyUserInfoCurl()"
-                  >
-                    Copy CURL
-                  </button>
-                <div class="jsoneditor" id="jsoneditor-request-userinfo"></div>
+                  <div class="jsoneditor" id="jsoneditor-response-token"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div
-              class="collapse multi-collapse show"
-              id="collapseResponseUserInfo"
+        </div>
+
+        <button onclick="generateToken()" class="btn btn-toolbox-primary">
+          Get Token
+        </button>
+        <div class="form-group">
+          <label for="token">Token</label>
+          <input
+            readonly
+            type="text"
+            class="form-control"
+            id="token"
+            aria-describedby="token"
+            placeholder=""
+          />
+        </div>
+      </div>
+      <div class="user-info">
+        <h1>Part 4: Get User Information</h1>
+        <p>The Authentication Token will be used to get the user information</p>
+
+        <div class="request-response">
+          <p>
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseRequestUserInfo"
+              aria-expanded="false"
+              aria-controls="collapseRequestUserInfo"
             >
-              <div class="card card-body">
-                <div class="jsoneditor" id="jsoneditor-response-userinfo"></div>
+              Toggle Request
+            </button>
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseResponseUserInfo"
+              aria-expanded="false"
+              aria-controls="collapseResponseUserInfo"
+            >
+              Toggle Response
+            </button>
+          </p>
+          <div class="col">
+            <div class="row">
+              <div
+                class="collapse multi-collapse show"
+                id="collapseRequestUserInfo"
+              >
+                <div class="card card-body">
+                  <div class="col">
+                    <button
+                      class="btn btn-secondary copy-curl"
+                      type="button"
+                      onclick="copyUserInfoCurl()"
+                    >
+                      Copy CURL
+                    </button>
+                    <div
+                      class="jsoneditor"
+                      id="jsoneditor-request-userinfo"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div
+                class="collapse multi-collapse show"
+                id="collapseResponseUserInfo"
+              >
+                <div class="card card-body">
+                  <div class="col">
+                  <button
+                    class="btn btn-secondary copy-curl"
+                    type="button"
+                    onclick="copyUserInfoResponse()"
+                  >
+                    Copy Response
+                  </button>
+                  <div
+                    class="jsoneditor"
+                    id="jsoneditor-response-userinfo"
+                  ></div>
+                </div>
               </div>
             </div>
           </div>
