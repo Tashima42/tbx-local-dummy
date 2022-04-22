@@ -149,7 +149,6 @@ function generateToken() {
       refreshToken = res.refresh_token
       // TODO: expires 
       localStorage.setItem("token", token)
-      document.getElementById('token').value = token
 
       updateJsonEditorResponseToken({token, tokenType, refreshToken})
       updateJsonEditorRequestUserInfo()
@@ -168,8 +167,6 @@ function getUserInfo() {
     .then(res => {
       subscriber_id = res.subscriber_id
       country_code = res.country_code
-      document.getElementById('subscriberIdInput').value = subscriber_id
-      document.getElementById('subscriberCountryCodeInput').value = country_code
 
       updateJsonEditorResponseUserInfo({subscriber_id, country_code})
     })

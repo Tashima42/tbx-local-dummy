@@ -375,29 +375,11 @@
         for the user, and must be revoked after one use
       </p>
 
+        <button onclick="generateToken()" class="btn btn-toolbox-primary">
+          Get Token
+        </button>
+
       <div class="request-response">
-        <p>
-          <button
-            class="btn btn-secondary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseRequestToken"
-            aria-expanded="false"
-            aria-controls="collapseRequestToken"
-          >
-            Toggle Request
-          </button>
-          <button
-            class="btn btn-secondary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseResponseToken"
-            aria-expanded="false"
-            aria-controls="collapseResponseToken"
-          >
-            Toggle Response
-          </button>
-        </p>
         <div class="col">
           <div class="row">
             <div class="collapse multi-collapse show" id="collapseRequestToken">
@@ -435,49 +417,39 @@
             </div>
           </div>
         </div>
-
-        <button onclick="generateToken()" class="btn btn-toolbox-primary">
-          Get Token
-        </button>
-        <div class="form-group">
-          <label for="token">Token</label>
-          <input
-            readonly
-            type="text"
-            class="form-control"
-            id="token"
-            aria-describedby="token"
-            placeholder=""
-          />
-        </div>
+        <p>
+          <button
+            class="btn btn-secondary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseRequestToken"
+            aria-expanded="false"
+            aria-controls="collapseRequestToken"
+          >
+            Toggle Request
+          </button>
+          <button
+            class="btn btn-secondary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseResponseToken"
+            aria-expanded="false"
+            aria-controls="collapseResponseToken"
+          >
+            Toggle Response
+          </button>
+        </p>
       </div>
       <div class="user-info">
         <h1>Part 4: Get User Information</h1>
         <p>The Authentication Token will be used to get the user information</p>
 
+
+      <button onclick="getUserInfo()" class="btn btn-toolbox-primary">
+        Get User Info
+      </button>
+
         <div class="request-response">
-          <p>
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseRequestUserInfo"
-              aria-expanded="false"
-              aria-controls="collapseRequestUserInfo"
-            >
-              Toggle Request
-            </button>
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseResponseUserInfo"
-              aria-expanded="false"
-              aria-controls="collapseResponseUserInfo"
-            >
-              Toggle Response
-            </button>
-          </p>
           <div class="col">
             <div class="row">
               <div
@@ -523,35 +495,31 @@
               </div>
             </div>
           </div>
+          <p>
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseRequestUserInfo"
+              aria-expanded="false"
+              aria-controls="collapseRequestUserInfo"
+            >
+              Toggle Request
+            </button>
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseResponseUserInfo"
+              aria-expanded="false"
+              aria-controls="collapseResponseUserInfo"
+            >
+              Toggle Response
+            </button>
+          </p>
         </div>
       </div>
-
-      <button onclick="getUserInfo()" class="btn btn-toolbox-primary">
-        Get User Info
-      </button>
-      <div class="form-group">
-        <label for="subscriberIdInput">Subscriber Id</label>
-        <input
-          readonly
-          type="text"
-          class="form-control"
-          id="subscriberIdInput"
-          aria-describedby="subscriberIdInput"
-          placeholder=""
-        />
       </div>
-      <div class="form-group">
-        <label for="subscriberCountryCodeInput">Country Code</label>
-        <input
-          readonly
-          type="text"
-          class="form-control"
-          id="subscriberCountryCodeInput"
-          aria-describedby="subscriberCountryCode"
-          placeholder=""
-        />
-      </div>
-    </div>
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
       <div
         id="liveToast"
