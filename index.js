@@ -25,10 +25,10 @@ function main() {
 }
 
 function loadJsonEditors() {
-  jsonEditor.token.request = initJsonEditorRequestToken()
-  jsonEditor.token.response = initJsonEditorResponseToken()
-  jsonEditor.userInfo.request = initJsonEditorRequestUserInfo()
-  jsonEditor.userInfo.response = initJsonEditorResponseUserInfo()
+  jsonEditor.token.request = initJsonEditor("jsoneditor-request-token")
+  jsonEditor.token.response =  initJsonEditor("jsoneditor-response-token")
+  jsonEditor.userInfo.request =  initJsonEditor("jsoneditor-request-userinfo")
+  jsonEditor.userInfo.response = initJsonEditor("jsoneditor-response-userinfo")
 }
 
 function loadQueryParams() {
@@ -265,32 +265,13 @@ function copyUserInfoResponse() {
   showToast("Copied Get UserInfo Response to clipboard")
 }
 
-function initJsonEditorRequestToken() {
-  const container = document.getElementById("jsoneditor-request-token")
-  const options = {mode: "code", mainMenuBar: false}
+function initJsonEditor(elementId) {
+  const container = document.getElementById(elementId)
+  const options = {mode: "code", mainMenuBar: false, statusBar: false}
   const editor = new JSONEditor(container, options)
   editor.aceEditor.setReadOnly(true)
-  return editor
-}
-function initJsonEditorResponseToken() {
-  const container = document.getElementById("jsoneditor-response-token")
-  const options = {mode: "code", mainMenuBar: false}
-  const editor = new JSONEditor(container, options)
-  editor.aceEditor.setReadOnly(true)
-  return editor
-}
-function initJsonEditorRequestUserInfo() {
-  const container = document.getElementById("jsoneditor-request-userinfo")
-  const options = {mode: "code", mainMenuBar: false}
-  const editor = new JSONEditor(container, options)
-  editor.aceEditor.setReadOnly(true)
-  return editor
-}
-function initJsonEditorResponseUserInfo() {
-  const container = document.getElementById("jsoneditor-response-userinfo")
-  const options = {mode: "code", mainMenuBar: false}
-  const editor = new JSONEditor(container, options)
-  editor.aceEditor.setReadOnly(true)
+  editor.aceEditor.renderer.setShowGutter(false)
+  editor.aceEditor.renderer.setShowPrintMargin(false)
   return editor
 }
 
