@@ -23,10 +23,7 @@ var jsonEditor = {
     response: null,
   }
 }
-const autoCompleteParseTokenHistory = [
-  {},
-  //{ token: { access_token: "azul", bola: "preta"}, success: true}
-]
+const autoCompleteParseTokenHistory = [{}]
 
 main()
 
@@ -177,11 +174,11 @@ function getUserInfo() {
     .then(async res => {
       const body = await res.json()
       Object.assign(res, { parsedBody: body })
-      // TODO: add response parser
 
       updateJsonEditorResponseUserInfo(res)
-      //evaluateGetUserInfo({ subscriber_id, country_code })
+      localStorage.setItem('userInfo', JSON.stringify(body))
       document.getElementById("loading-userinfo").style.display = "none";
+      evaluateGetUserInfo()
     })
 }
 
@@ -435,7 +432,9 @@ function evaluateGetToken() {
     checkBoxId: "generate-token-checkbox"
   })
 }
-function evaluateGetUserInfo({ subscriber_id, country_code }) {
+function evaluateGetUserInfo() {
+  const { subscriber_id, country_code } = JSON.parse(localStorage.getItem("userInfo"))
+
   const listId = "user-info-problems"
   let validStep = true
   const validations = [
@@ -528,7 +527,7 @@ function getParseTokenPath() {
 function handleaParseTokenAutocompleteChange() {
   const currentAutocompleteState = getCurrentAutocompleteState()
   const parseResponseTokenInputValue = document.getElementById("parse-response-token-list").value
-  const parseResponseTokenInputPath =  getParseTokenPath()
+  const parseResponseTokenInputPath = getParseTokenPath()
   updateParseTokenPath(parseResponseTokenInputPath + "." + parseResponseTokenInputValue)
 
   autoCompleteParseTokenHistory.push(currentAutocompleteState[parseResponseTokenInputValue])
@@ -538,7 +537,7 @@ function handleaParseTokenAutocompleteChange() {
 
 function deleteLastParseTokenAutocompleteAction() {
   autoCompleteParseTokenHistory.pop()
-  const parseResponseTokenInputPathArray =  getParseTokenPath().split(".")
+  const parseResponseTokenInputPathArray = getParseTokenPath().split(".")
   parseResponseTokenInputPathArray.pop()
   updateParseTokenPath(parseResponseTokenInputPathArray.join("."))
   autocompleteParseTokenResponse()
@@ -547,7 +546,7 @@ function deleteLastParseTokenAutocompleteAction() {
 function autocompleteParseTokenResponse() {
   const currentAutocompleteState = getCurrentAutocompleteState()
 
-  if(typeof currentAutocompleteState == "object") {
+  if (typeof currentAutocompleteState == "object") {
     clearOptionList()
     loadAutocompleteKeys(currentAutocompleteState)
   } else if (validateString(currentAutocompleteState)) {
