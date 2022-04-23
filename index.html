@@ -477,6 +477,23 @@
           </button>
         </p>
       </div>
+      <div class="parse-response-token">
+        <h3>3.1 Parse Token response</h3>
+        <p>Here, you need to set what is the <code>token</code> value in your <code>/token</code> response body</p>
+        <div class="parse-response-token-result">
+          <p>Token path: <code id="parse-response-token-result-path">$.body</code></p>
+          <p>Token value: <code id="parse-response-token-result-value"></code></p>
+        </div>
+        <div class="parse-response-token-autocomplete">
+          <div class="parse-response-token-input">
+            <input onchange="handleaParseTokenAutocompleteChange()" class="form-control" list="parse-response-token-options" id="parse-response-token-list" placeholder="Type to search...">
+            <datalist id="parse-response-token-options"></datalist>
+          </div>
+          <button class="btn btn-outline-danger delete-parse-response-token" type="button" onclick="deleteLastParseTokenAutocompleteAction()" >
+          Delete
+        </button>
+        </div>
+      </div>
     <hr>
       <div class="user-info">
       <div class="part-title">

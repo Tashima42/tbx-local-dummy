@@ -23,6 +23,10 @@ var jsonEditor = {
     response: null,
   }
 }
+const autoCompleteParseTokenHistory = [
+  {},
+  //{ token: { access_token: "azul", bola: "preta"}, success: true}
+]
 
 main()
 
@@ -32,6 +36,7 @@ function main() {
   loadClient()
   loadAuthorizationCode()
   evaluateSteps()
+  autocompleteParseTokenResponse()
 }
 
 function loadQueryParams() {
@@ -146,22 +151,17 @@ function getToken() {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   })
-    .then(res => res.json())
-    .then(res => {
-      console.log(res)
-      const response = {
-        token: res.access_token,
-        tokenType: res.token_type,
-        refreshToken: res.refresh_token,
-        statusCode: res.status
-        // TODO: expires 
-      }
-      localStorage.setItem("token", response.token)
+    .then(async res => {
+      const body = await res.json()
+      Object.assign(res, { parsedBody: body })
 
-      updateJsonEditorResponseToken(response)
+      localStorage.setItem('getTokenBody', JSON.stringify(body))
+
+      updateJsonEditorResponseToken(res)
       updateJsonEditorRequestUserInfo()
-      evaluateGetToken(response.token)
       document.getElementById("loading-token").style.display = "none";
+      autoCompleteParseTokenHistory.push(body)
+      autocompleteParseTokenResponse()
     })
 }
 
@@ -174,13 +174,13 @@ function getUserInfo() {
       'Authorization': `Bearer ${localStorage.getItem("token")}`
     },
   })
-    .then(res => res.json())
-    .then(res => {
-      subscriber_id = res.subscriber_id
-      country_code = res.country_code
+    .then(async res => {
+      const body = await res.json()
+      Object.assign(res, { parsedBody: body })
+      // TODO: add response parser
 
-      updateJsonEditorResponseUserInfo({ subscriber_id, country_code })
-      evaluateGetUserInfo({ subscriber_id, country_code })
+      updateJsonEditorResponseUserInfo(res)
+      //evaluateGetUserInfo({ subscriber_id, country_code })
       document.getElementById("loading-userinfo").style.display = "none";
     })
 }
@@ -196,16 +196,12 @@ function updateJsonEditorRequestToken() {
   jsonEditor.token.request.set(json)
 }
 
-function updateJsonEditorResponseToken({ token, tokenType, refreshToken, statusCode }) {
+function updateJsonEditorResponseToken(response) {
   const json = {
-    body: {
-      token,
-      tokenType,
-      refreshToken
-    },
-    statusCode,
+    status: response.status,
+    body: response.parsedBody,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": response.headers.get("Content-Type")
     },
   }
   jsonEditor.token.response.set(json)
@@ -222,14 +218,12 @@ function updateJsonEditorRequestUserInfo() {
   jsonEditor.userInfo.request.set(json)
 }
 
-function updateJsonEditorResponseUserInfo({ subscriber_id, country_code }) {
+function updateJsonEditorResponseUserInfo(response) {
   const json = {
-    body: {
-      subscriber_id,
-      country_code
-    },
+    status: response.status,
+    body: response.parsedBody,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": response.headers.get("Content-Type")
     },
   }
   jsonEditor.userInfo.response.set(json)
@@ -410,7 +404,8 @@ function evaluateConfigureClient() {
     checkBoxId: "configure-client-checkbox"
   })
 }
-function evaluateGetToken(token) {
+function evaluateGetToken() {
+  const token = localStorage.getItem("token")
   const listId = "generate-token-problems"
   let validStep = true
   const validations = [
@@ -440,7 +435,7 @@ function evaluateGetToken(token) {
     checkBoxId: "generate-token-checkbox"
   })
 }
-function evaluateGetUserInfo({subscriber_id, country_code}) {
+function evaluateGetUserInfo({ subscriber_id, country_code }) {
   const listId = "user-info-problems"
   let validStep = true
   const validations = [
@@ -514,4 +509,74 @@ function loadJsonEditors() {
 function evaluateSteps() {
   evaluateConfigureClient()
   evaluateLogin()
+}
+
+function updateParseTokenValue(value) {
+  document.getElementById("parse-response-token-result-value").innerText = value
+  localStorage.setItem('token', value)
+  evaluateGetToken()
+}
+
+function updateParseTokenPath(value) {
+  document.getElementById("parse-response-token-result-path").innerText = value
+}
+
+function getParseTokenPath() {
+  return document.getElementById("parse-response-token-result-path").innerText
+}
+
+function handleaParseTokenAutocompleteChange() {
+  const currentAutocompleteState = getCurrentAutocompleteState()
+  const parseResponseTokenInputValue = document.getElementById("parse-response-token-list").value
+  const parseResponseTokenInputPath =  getParseTokenPath()
+  updateParseTokenPath(parseResponseTokenInputPath + "." + parseResponseTokenInputValue)
+
+  autoCompleteParseTokenHistory.push(currentAutocompleteState[parseResponseTokenInputValue])
+  document.getElementById("parse-response-token-list").value = ""
+  autocompleteParseTokenResponse()
+}
+
+function deleteLastParseTokenAutocompleteAction() {
+  autoCompleteParseTokenHistory.pop()
+  const parseResponseTokenInputPathArray =  getParseTokenPath().split(".")
+  parseResponseTokenInputPathArray.pop()
+  updateParseTokenPath(parseResponseTokenInputPathArray.join("."))
+  autocompleteParseTokenResponse()
+}
+
+function autocompleteParseTokenResponse() {
+  const currentAutocompleteState = getCurrentAutocompleteState()
+
+  if(typeof currentAutocompleteState == "object") {
+    clearOptionList()
+    loadAutocompleteKeys(currentAutocompleteState)
+  } else if (validateString(currentAutocompleteState)) {
+    updateParseTokenValue(currentAutocompleteState)
+    clearOptionList()
+  }
+
+  function loadAutocompleteKeys(keysObject) {
+    Object.keys(keysObject).forEach(key => {
+      addOptionToList(key)
+    })
+  }
+
+  function clearOptionList() {
+    const node = document.getElementById("parse-response-token-options")
+    while (node.firstChild) {
+      node.removeChild(node.lastChild);
+    }
+  }
+
+  function addOptionToList(value) {
+    const node = document.createElement("option");
+    const textnode = document.createTextNode(value);
+    node.appendChild(textnode);
+    node.setAttribute('id', "parse-response-token-option")
+    document.getElementById("parse-response-token-options").appendChild(node)
+  }
+}
+
+function getCurrentAutocompleteState() {
+  return autoCompleteParseTokenHistory[autoCompleteParseTokenHistory.length - 1]
 }

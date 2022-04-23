@@ -123,3 +123,32 @@ h1 {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.parse-response-token-input {
+  width: 79%;
+  margin-right: 2%;
+}
+
+.delete-parse-response-token {
+  width: 19%;
+}
+
+.parse-response-token-result {
+  width: 100%;
+  border: 1px dashed purple;
+  border-radius: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.parse-response-token-result p {
+  margin-bottom: 5px;
+}
+
+.parse-response-token-autocomplete {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin-top: 10px;
+  width: 100%;
+}
