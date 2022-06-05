@@ -339,6 +339,7 @@ function evaluateLogin() {
     if (valid === false) validStep = false
   })
 
+  removeById("login-problems-press")
   changeProblemsValidState({
     problemsSelector: ".login-problems",
     elementId: "login-problems-ok",
@@ -507,7 +508,6 @@ function loadJsonEditors() {
 
 function evaluateSteps() {
   evaluateConfigureClient()
-  evaluateLogin()
 }
 
 function updateParseTokenValue(value) {
